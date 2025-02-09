@@ -1,0 +1,40 @@
+{
+	"name": "music-app",
+	"type": "module",
+	"private": true,
+	"packageManager": "pnpm@9.15.3+sha512.1f79bc245a66eb0b07c5d4d83131240774642caaa86ef7d0434ab47c0d16f66b04e21e0c086eb61e62c77efc4d7f7ec071afad3796af64892fae66509173893a",
+	"description": "A modern music application built with Nuxt.js and powered by Yandex Music API.",
+	"author": "yNk",
+	"homepage": "https://github.com/duttdutt/music-app",
+	"scripts": {
+		"build": "nuxt build",
+		"dev": "nuxt dev --open --logLevel=info --no-clear",
+		"generate": "nuxt generate",
+		"preview": "nuxt preview",
+		"postinstall": "nuxt prepare",
+		"lint": "eslint .",
+		"lint:fix": "eslint . --fix"
+	},
+	"dependencies": {
+		"@pinia/nuxt": "^0.9.0",
+		"nuxt": "^3.15.2",
+		"pinia": "^2.3.1",
+		"vue": "latest",
+		"vue-router": "latest"
+	},
+	"//": {
+		"typescript and vue-tsc": "Type-checking at build or development time"
+	},
+	"devDependencies": {
+		"@antfu/eslint-config": "^3.16.0",
+		"@nuxt/eslint": "0.7.5",
+		"@nuxtjs/color-mode": "^3.5.2",
+		"@nuxtjs/google-fonts": "^3.2.0",
+		"axios": "^1.7.9",
+		"crypto-js": "^4.2.0",
+		"eslint": "^9.18.0",
+		"sass": "^1.83.4",
+		"typescript": "^5.7.3",
+		"vue-tsc": "^2.2.0"
+	}
+}

@@ -1,0 +1,7 @@
+@use "../abstracts" as *;
+@use "../mixins" as *;
+@use "../themes" as *;
+* {
+  background-color: var(--background-color);
+  color: var(--text-color-primary);
+}
