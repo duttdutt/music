@@ -1,7 +1,18 @@
-@forward 'variables';
+<script setup></script>
+<template></template>
+<!-- <script setup lang="ts"></script>
 
-@use "../assets/scss/abstracts" as *;
-@use "../assets/scss/mixins" as *;
+<template>
+  <section class="logo">
+    <NuxtLink to="/" class="underline-effect">
+      Reimagined<span class="yellow">Yandex</span><span class="red">Music</span>
+    </NuxtLink>
+  </section>
+</template>
+
+<style scoped lang="scss">
+@use "@/assets/scss/abstracts" as *;
+@use "@/assets/scss/mixins" as *;
 
 .logo {
   display: flex;
@@ -41,7 +52,7 @@
 }
 
 .underline-effect::after {
-  content: '';
+  content: "";
   position: absolute;
   left: 0;
   bottom: 4px;
@@ -55,3 +66,4 @@
 .underline-effect:hover::after {
   width: 100%;
 }
+</style> -->

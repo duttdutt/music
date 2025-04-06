@@ -4,9 +4,3 @@
 @use 'mixins';
 @use 'pages';
 @use 'themes';
-
-@media (max-width: 800px) {
-  aside {
-    display: none !important;
-  }
-}

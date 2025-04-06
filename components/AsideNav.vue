@@ -47,7 +47,6 @@
   </nav>
 </template>
 
-
 <style scoped lang="scss">
 @use "../assets/scss/abstracts" as *;
 @use "../assets/scss/mixins" as *;
@@ -69,6 +68,10 @@
   &__wrapper {
     width: 150px;
     height: 170px;
+
+    @media (max-width: 801px) {
+      width: 100%;
+    }
   }
 }
 
@@ -89,7 +92,7 @@
   background-color: var(--border-color);
 
   &:hover,
-  &:hover>* {
+  &:hover > * {
     transform: translateY(-5px);
     transition: all 0.3s ease;
 
@@ -104,6 +107,11 @@
     background-color: var(--border-color);
     font-size: $font-size-md;
     font-weight: $font-weight-bold;
+
+    @media (max-width: 801px) {
+      font-size: $font-size-xl;
+    }
   }
 }
 </style>
+

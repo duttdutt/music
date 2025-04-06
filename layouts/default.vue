@@ -1,23 +1,11 @@
-<script setup lang="ts">
-const colorMode = useColorMode()
-
-const toggle = () => {
-  colorMode.value === "light"
-    ? colorMode.value = "dark"
-    : colorMode.value = "light"
-}
-</script>
-
-
+<script setup lang="ts"></script>
 
 <template>
   <div class="layout">
-
     <aside>
-      <AsideLogoSection />
-      <AsideNavSection />
-      <AsideUserSection />
-      <ToggleThemeButton />
+      <AsideLogo />
+      <AsideNav />
+      <AsideUser />
     </aside>
     <div class="content">
       <ContentMain>
@@ -28,14 +16,17 @@ const toggle = () => {
   </div>
 </template>
 
-
-
 <style lang="scss" scoped>
 .layout {
-  padding: 20px;
   display: flex;
+  flex-direction: column;
+  padding: 20px;
   min-height: 100vh;
   gap: 10px;
+
+  @media (min-width: 801px) {
+    flex-direction: row;
+  }
 
   aside {
     display: flex;
@@ -43,6 +34,17 @@ const toggle = () => {
     gap: 10px;
 
     width: 350px;
+
+    @media (max-width: 801px) {
+      width: 100%;
+    }
+
+    @media (max-width: 800px) {
+      .nav-section,
+      .user-section {
+        display: none;
+      }
+    }
   }
 
   .content {
@@ -52,11 +54,11 @@ const toggle = () => {
     flex-direction: column;
     gap: 10px;
 
-    :deep(main) {
+    main {
       flex-grow: 1;
     }
 
-    :deep(footer) {
+    footer {
       flex-shrink: 0;
     }
   }

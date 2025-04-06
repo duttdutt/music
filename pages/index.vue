@@ -1,79 +1,40 @@
 <script setup lang="ts">
-import LikedTracks from '~/components/Track/LikedTracks.vue';
-import AudioPlayer from '~/components/Track/AudioPlayer.vue';
-import Track from '~/components/Track/Track.vue';
-import { useYandexMusicStore } from '~/stores/accountStore/accountStore';
-import { userLikedTracksStore } from '~/stores/userLikedTracksStore/userLikedTracksStore';
-import { useTrackInfoStore } from '~/stores/trackInfoStore/trackInfoStore';
+type TTrackMetadata = {
+  id: number;
+  title: string;
+  trackCoverUrl?: string;
+  artists: TArtist[];
+  trackBlob: any;
+};
+type TArtist = {
+  id: number;
+  YMid: number;
+  name: string;
+  artistCoverUrl?: string;
+};
+type TTrackDownloadUrl = { downloadLink: string | null };
+type TTrackFinal = TTrackMetadata & TTrackDownloadUrl;
 
-const tracksStore = userLikedTracksStore();
+const response = ref<any>('')
+const audioUrl = ref<any>(null);
+const trackData = ref<TTrackFinal | null>(null);
 
-const test2 = async () => {
-  if (!tracksStore.likedTracks) {
-    await tracksStore.fetchUserData()
+async function fetchTrack() {
+  try {
+    const tracks: any = await $fetch(`http://localhost:3024/tracks/${222}/`);
+    audioUrl.value = tracks.id;
+    console.log(tracks.title);
+  } catch (error) {
+    console.error('Failed to fetch track:', error);
   }
-
-  console.log(tracksStore.likedTracks);
 }
-
-/* Initializing useYandexMusicStore */
-/* Testing [likes] */
-// закинуть путь в server
-// сделать запрос через useFetch
-// отобразить результат в шаблоне
-const store = useYandexMusicStore();
-await store.fetchData();
-
-
-
-/* Testing [trackId] */
-// сделать запрос через useFetch
-// отобразить результат в шаблоне
-const { data } = useFetch('/api/yandex-music/tracks/1000')
-console.log(data);
-const { data: info } = useFetch('/api/yandex-music/tracks/1000/download-info')
-console.log(info);
-
-const trackInfoStore = useTrackInfoStore()
-
-const trackId = ref('1000')
-const audioSrc = ref('')
-const trackName = ref<null | string>(null)
-const trackAvatar = ref('')
-
-async function fetchTrackDownloadInfo() {
-  if (!trackId.value) {
-    return
-  }
-
-  const downloadInfo: any = trackInfoStore.trackDownloadInfoData
-  audioSrc.value = downloadInfo.downloadLink
-
-  trackName.value = trackInfoStore.trackName
-  trackAvatar.value = trackInfoStore.trackAvatar
-}
-
-onMounted(async () => {
-  await trackInfoStore.fetchTrackDownloadInfoData(trackId.value)
-})
 </script>
 
 <template>
-  <div>
-    <div class="input">
-			<input
-				v-model="trackId"
-				class="input__field"
-				placeholder="Enter track ID"
-			>
-			<button class="input__button" @click="fetchTrackDownloadInfo">
-				Fetch Track
-			</button>
-		</div>
+  <button @click="fetchTrack">Fetch track</button>
 
-		<AudioPlayer :audio-src="audioSrc">
-			<Track :track-avatar="trackAvatar" :track-name="trackName" />
-		</AudioPlayer>
-		<LikedTracks />
-  </div>
+  <audio v-if="audioUrl" :src="audioUrl" controls></audio>
+  {{ audioUrl }}
 </template>
+
+<style scoped lang="scss"></style>

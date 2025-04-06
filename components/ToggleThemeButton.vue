@@ -1,50 +1,79 @@
 <script setup lang="ts">
+import ThemeDarkIcon from '../assets/svg/ThemeDarkIcon.svg'
+import ThemeLightIcon from '../assets/svg/ThemeLightIcon.svg'
+
 const colorMode = useColorMode()
 
-const toggle = (): void => {
-  colorMode.value === "light"
-    ? colorMode.value = "dark"
-    : colorMode.value = "light"
+const currentIcon = computed(() =>
+    colorMode.value === 'light' ? ThemeLightIcon : ThemeDarkIcon
+)
+
+function toggleTheme() {
+    colorMode.value = colorMode.value === 'light' ? 'dark' : 'light'
 }
 </script>
 
-
-
 <template>
-  <button @click="toggle">Toggle Theme</button>
+    <button @click="toggleTheme" aria-label="Toggle theme" class="btn">
+        <img :src="currentIcon" class="theme_icon" width="40" height="40" alt="Theme toggle">
+    </button>
 </template>
 
+<style lang="scss" scoped>
+.btn {
+    --logo-size: 40px;
+    --border-width: 1px;
+    --animation-duration: 0.3s;
 
+    display: grid;
+    place-items: center;
+    position: relative;
+    width: var(--logo-size);
+    height: var(--logo-size);
+    padding: 5px;
+    border: var(--border-width) solid var(--border-color);
+    transition:
+        width var(--animation-duration) ease,
+        height var(--animation-duration) ease;
 
-<style lang="scss" module>
-@use "../assets/scss/abstracts/variables" as *;
+    &::before,
+    &::after {
+        content: '';
+        position: absolute;
+        width: 5px;
+        height: 5px;
+        border: 0 solid transparent;
+        transition:
+            width var(--animation-duration) ease,
+            height var(--animation-duration) ease;
+    }
 
-button {
-  padding: 5px 10px;
+    &::before {
+        bottom: calc(-1 * var(--border-width));
+        right: calc(-1 * var(--border-width));
+        border-bottom: var(--border-width) solid var(--border-color-hover);
+        border-right: var(--border-width) solid var(--border-color-hover);
+    }
 
-  transition: all .3s;
+    &::after {
+        top: calc(-1 * var(--border-width));
+        left: calc(-1 * var(--border-width));
+        border-top: var(--border-width) solid var(--border-color-hover);
+        border-left: var(--border-width) solid var(--border-color-hover);
+    }
 
-  background-color: var(--background-color-secondary);
-  border: 1px solid var(--border-color);
-  border-radius: $border-radius-s;
-  font-family: $font-family-base;
-  font-weight: $font-weight-semibold;
-  letter-spacing: 0.5px;
+    &:hover {
 
-  &:hover {
-    color: var(--text-yellow);
-    background-color: var(--background-color-hover);
-    border-color: var(--border-color-hover);
-  }
+        &::before,
+        &::after {
+            width: 120%;
+            height: 120%;
+        }
+    }
+}
 
-  &:focus {
-    background-color: var(--background-color-active);
-    border-color: var(--text-yellow);
-  }
-
-  &:active {
-    background-color: var(--background-color-active);
-    border-color: var(--text-yellow);
-  }
+.theme_icon {
+    display: block;
+    object-fit: contain;
 }
 </style>

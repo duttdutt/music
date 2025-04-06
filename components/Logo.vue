@@ -1,51 +1,74 @@
-<script setup>
-defineProps({
-  linkUrl: {
-    type: String,
-    required: true
-  },
-  imageUrl: {
-    type: String,
-    required: true
-  }
-})
+<script setup lang="ts">
+interface Props {
+  imageUrl: string;
+  linkUrl?: string;
+}
+
+defineProps<Props>()
 </script>
 
 <template>
-  <NuxtLink :to="linkUrl" class="logo">
-    <img :src="imageUrl" alt="logo" class="logo-image">
+  <!-- #790EAD -->
+   <!-- # -->
+  <NuxtLink :to="linkUrl" class="logo" role="img">
+    <img :src="imageUrl" alt="" class="logo__image" width="40" height="40">
   </NuxtLink>
 </template>
 
-
 <style scoped lang="scss">
-@use "../assets/scss/abstracts" as *;
-@use "../assets/scss/mixins" as *;
-
 .logo {
-  width: 40px;
-  height: 40px;
+  --logo-size: 40px;
+  --border-width: 1px;
+  --animation-duration: 0.3s;
 
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  color: inherit;
+  display: grid;
+  place-items: center;
+  position: relative;
+  width: var(--logo-size);
+  height: var(--logo-size);
+  padding: 5px;
+  border: var(--border-width) solid var(--border-color);
+  transition:
+    width var(--animation-duration) ease,
+    height var(--animation-duration) ease;
 
-  .logo-image {
-    width: 40px;
-    height: 40px;
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    width: 5px;
+    height: 5px;
+    border: 0 solid transparent;
+    transition:
+      width var(--animation-duration) ease,
+      height var(--animation-duration) ease;
+  }
 
-    padding: 5px;
+  &::before {
+    bottom: calc(-1 * var(--border-width));
+    right: calc(-1 * var(--border-width));
+    border-bottom: var(--border-width) solid var(--border-color-hover);
+    border-right: var(--border-width) solid var(--border-color-hover);
+  }
 
-    border-radius: $border-radius-s;
-    border: 1px solid var(--border-color);
+  &::after {
+    top: calc(-1 * var(--border-width));
+    left: calc(-1 * var(--border-width));
+    border-top: var(--border-width) solid var(--border-color-hover);
+    border-left: var(--border-width) solid var(--border-color-hover);
+  }
 
-    transition: all 0.3s;
-
-    &:hover {
-      border: 1px solid var(--border-color-hover);
-      background-color: var(--background-color-secondary);
+  &:hover {
+    &::before,
+    &::after {
+      width: 120%;
+      height: 120%;
     }
   }
+}
+
+.logo__image {
+  display: block;
+  object-fit: contain;
 }
 </style>

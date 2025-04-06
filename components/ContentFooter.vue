@@ -4,18 +4,24 @@ import NuxtLogo from '~/assets/svg/Nuxt_Logo.svg'
 import SCSSLogo from '~/assets/svg/SASS_Logo.svg'
 import PiniaLogo from '~/assets/svg/Pinia_Logo.svg'
 import GitHubLogo2 from '~/assets/svg/GitHub_Logo2.svg'
+import GitHubLogo from '~/assets/svg/GitHub_Logo.svg'
+
+const colorMode = useColorMode();
 </script>
 
 <template>
   <footer>
-    <div class="with">
-      <Logo linkUrl="/" :image-url="VueLogo" />
-      <Logo linkUrl="/" :image-url="NuxtLogo" />
-      <Logo linkUrl="/" :image-url="PiniaLogo" />
-      <Logo linkUrl="/" :image-url="SCSSLogo" />
+    <div class="left">
+      <Logo :image-url="VueLogo" link-url="/" />
+      <Logo :image-url="NuxtLogo" link-url="/" />
+      <Logo :image-url="PiniaLogo" link-url="/" />
+      <Logo :image-url="SCSSLogo" link-url="/" />
     </div>
-    <div>
-      <Logo linkUrl="/" :image-url="GitHubLogo2" />
+    <div class="middle">
+      <Logo :image-url="colorMode.value === 'light' ? GitHubLogo : GitHubLogo2" link-url="/" />
+    </div>
+    <div class="right">
+      <ToggleThemeButton />
     </div>
   </footer>
 </template>
@@ -38,16 +44,13 @@ footer {
   border: 1px solid var(--border-color);
   border-radius: $border-radius-md;
 
-  .with {
+  .left,
+  .middle,
+  .right {
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 10px;
-
-    p {
-      font-size: $font-size-md;
-      font-weight: $font-weight-semibold;
-    }
   }
 }
 </style>
